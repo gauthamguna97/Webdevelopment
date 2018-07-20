@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <meta name = "viewport" content = "width = device-width, initial-scale = 1, 
+         maximum-scale = 1, minimum-scale = 1, user-scalable = no, minimal-ui" />
+      <meta name = "apple-mobile-web-app-capable" content = "yes" />
+      <meta name = "apple-mobile-web-app-status-bar-style" content = "red" />
+      <title>Jadoo Messenger</title>
+      <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/css/framework7.ios.min.css" />
+      <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/css/framework7.ios.colors.min.css" />
+   </head>
+   <body>
+
+      <div class = "views">
+         
+         <div class = "view view-main">
+            
+            <div class = "pages">
+               
+               <div data-page = "home" class = "page navbar-fixed toolbar-fixed">
+                  
+
+                  <div class = "navbar">
+                     <div class = "navbar-inner">
+                        <div class = "left"></div>
+                        <div class = "center">Jadoo Messenger</div>
+                        <div class = "right"></div>
+                     </div>
+                  </div>
+                  
+                  <div class = "toolbar messagebar">
+                     <div class = "toolbar-inner">
+                        <textarea placeholder="Message"></textarea><a href="#" class = "link"> send </a>
+                     </div>
+                  </div>
+
+                  <div class = "page-content message-content">
+                     <div class = "messages">
+
+                     </div>
+
+                  </div>
+
+               </div>
+
+            </div>
+
+         </div>
+
+      </div>   
+   
+
+   </body>
+
+   <script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/framework7/1.4.2/js/framework7.min.js"></script>
+   
+   <script>
+      var jadooApp = new Framework7();
+      var $$ = Dom7;
+
+      var isActive = false;
+
+      var jadooMessages = jadooApp.messages('.messages',{autoLayout:true});
+
+      var jadooMessagebar = jadooApp.messagebar('.messagebar');
+
+      $$('.messagebar .link').on('click',function(){ 
+                
+         var messageText = jadooMessagebar.value().trim();
+
+         jadooMessagebar.clear();  
+         
+         if(messageText.length == 0) return;
+
+         var msgType = 'sent';
+         
+         jadooMessages.addMessage({
+            text: messageText,
+            type: msgType
+         })
+
+         
+         sendReply(messageText)
+         
+      });
+
+      function sendReply(msg){
+        
+         setTimeout(function(){
+
+            // jadooMessages.showTyping({
+            //    header :  'jadoo is typing'
+            // })
+            
+            setTimeout(function(){
+               jadooMessages.addMessage({
+                  text : msg,
+                  type : 'received'
+               })
+            },4000);
+
+         // jadooMessages.hideTyping();
+
+         },1000)
+      };
+
+        
+      
+   </script>
+
+</html>  
